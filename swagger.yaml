@@ -1,0 +1,217 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Avtar
+  license:
+    name: MIT
+#host: localhost:8080/avatar
+host: recruitanalytics.centralus.cloudapp.azure.com:8080/avtarServices
+basePath: /v2/avtar
+
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /updateRecords:
+    post:
+     
+      summary: Update Avtar Records
+      operationId: list Records
+      tags:
+        - avtar
+      parameters:
+        - name: body
+          in: body
+          description: update records
+          required: false
+          type: string
+          schema: 
+            $ref: '#/definitions/updateRecordsDetails'
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+        - name: client_id
+          in: header
+          description: client_id
+          required: true
+          type: string
+        - name: client_secret
+          in: header
+          description: client_secret
+          required: true
+          type: string
+            
+      responses:
+         
+         "200":
+          description: A page get updated Records
+          headers:
+            x-next:
+              type: string
+              description: A link to the next page of responses
+          schema:
+            $ref: '#/definitions/listRecords'
+      default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error1'
+      
+  /refreshToken:
+    get:
+      summary: get Refresh Token
+      operationId: tokenGenarator
+      tags:
+        - New Token Genarator
+      parameters:
+        - name: client_id
+          in: header
+          description: client_id
+          required: true
+          type: string
+        - name: client_secret
+          in: header
+          description: client_secret
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Genarated new Token
+          headers:
+            x-next:
+              type: string
+              description: A link to the next page of responses
+          schema:
+            $ref: '#/definitions/newToken'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error3'
+  /getAllRecords:
+    get:
+      summary: Records
+      operationId: list Records
+      tags:
+        - Records
+      parameters:
+      responses:
+        "200":
+          description: A paged array of Records
+          headers:
+            x-next:
+              type: string
+              description: A link to the next page of responses
+          schema:
+            $ref: '#/definitions/listOfRecords'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error2'
+    
+definitions:
+  list:
+    properties:
+      name:
+        type: string
+      tag:
+        type: string
+  refreshToken:
+    properties:
+      name:
+        type: string
+      tag:
+        type: string
+  updateRecordsDetails: 
+    type: object
+    properties:
+      $ref: '#/definitions/recordsUpdate'
+      candidate_id:
+        type: integer
+      title:
+        type: string
+      first_name:
+        type: string
+      middle_name:
+        type: string
+      last_name:
+        type: string
+      dob:
+        type: string
+  records:
+    required:
+      - auth
+    properties:
+      candidate_id:
+        type: int
+      title:
+        type: string
+      first_name:
+        type: string
+      middle_name:
+        type: string
+      last_name:
+        type: string
+      dob:
+        type: string
+  recordsUpdate:
+    type: object
+    properties: 
+      candidate_id:
+        type: int
+      title:
+        type: string
+      first_name:
+        type: string
+      middle_name:
+        type: string
+      last_name:
+        type: string
+      dob:
+        type: string
+  listOfRecords:
+    type: array
+    items:
+      $ref: '#/definitions/list'
+  listRecords:
+    type: object
+    items:
+      $ref: '#/definitions/records'
+  newToken:
+    type: object
+    items:
+      $ref: '#/definitions/refreshToken'
+  Error1:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  Error2:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  Error3:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  
