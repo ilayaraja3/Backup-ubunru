@@ -21,6 +21,9 @@ public class ExternalMail {
 		  String toAddress="to@aaumanalytics.com";
 		  Properties properties = System.getProperties();
 		   properties.put("mail.smtp.host", host);
+		properties.put("mail.smtp.auth", "true");
+	    properties.put("mail.smtp.port", "25");
+	    properties.put("mail.debug", "true");
 		
 		   Session session = Session.getInstance(properties,
 		       new javax.mail.Authenticator() {
@@ -29,7 +32,7 @@ public class ExternalMail {
 		      }
 		       }); 
 		      MimeMessage mimeMessage = new MimeMessage(session);    
-		     // mimeMessage.setFrom(new InternetAddress(fromAddress));
+		      mimeMessage.setFrom(new InternetAddress(from1));
 		      
 		      mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));    
 		      mimeMessage.setSubject("hello");
