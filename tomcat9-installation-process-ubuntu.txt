@@ -1,0 +1,189 @@
+uninstall tomcat7
+https://www.howtoinstall.co/en/ubuntu/xenial/tomcat7?action=remove
+https://www.djamware.com/post/588df76680aca722878a364a/install-nginx-tomcat-7-and-java-8-on-ubuntu-1604
+sudo apt-get remove tomcat7
+sudo apt-get remove --auto-remove tomcat7
+sudo apt-get purge tomcat7
+sudo apt-get purge --auto-remove tomcat7
+=======================================================
+sudo apt-get install zip
+zip -r compressed_filename.zip foldername
+sudo apt-get install unzip
+unzip default.zip
+
+=======================================================
+
+
+https://thishosting.rocks/install-java-ubuntu/
+sudo apt-get update && apt-get upgrade
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+
+sudo apt install oracle-java8-set-default
+sudo apt-get install oracle-java8-set-default
+
+sudo nano ~/.bashrc
+
+update-alternatives --config java
+ /usr/lib/jvm/java-8-oracle/jre/bin/java
+
+
+scp /home/aaum/Downloads/apache-tomcat-9.0.12.tar.gz aaum@13.82.189.165:/home/aaum
+scp /home/aaum/apache-tomcat-9.0.12.tar.gz aaum@35.185.74.185:/opt
+
+
+
+tar -xzf apache-tomcat-9.0.12.tar.gz
+sudo useradd -r tomcat9 --shell /bin/false
+sudo chown -R tomcat9 /opt/tomcat9
+sudo nano /opt/tomcat9/conf/tomcat-users.xml
+
+<tomcat-users>
+<role rolename="admin"/>
+<role rolename="admin-gui"/>
+<role rolename="manager-gui"/>
+<user username="admin" password="Admin@123" roles="admin,admin-gui,manager-gui"/>
+</tomcat-users>
+
+mv old_name new_name 
+mv apache-tomcat-9.0.12 tomcat9
+
+sudo chgrp -R tomcat9 /opt/tomcat9
+
+sudo chmod -R g+r conf
+sudo chmod g+x conf
+sudo chown -R tomcat9 webapps/ work/ temp/ logs/
+===================================================
+sudo nano /etc/systemd/system/tomcat7.service
+sudo nano /etc/systemd/system/tomcat9.service
+============================================
+$JAVA_OPTS $JSSE_OPTS
+==============
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=network.target
+
+[Service]
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle
+Environment=CATALINA_PID=/opt/tomcat9/tomcat9/temp/tomcat9.pid
+Environment=CATALINA_HOME=/opt/tomcat9/tomcat9
+Environment=CATALINA_BASE=/opt/tomcat9/tomcat9
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=/opt/tomcat9/tomcat9/bin/startup.sh
+ExecStop=/opt/tomcat9/tomcat9/bin/shutdown.sh
+
+User=tomcat9
+Group=tomcat9
+UMask=0007
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+============================================
+Unit]
+Description=Tomcat9
+After=network.target
+[Service]
+Type=forking
+User=tomcat9
+Group=tomcat9
+Environment=CATALINA_PID=/opt/tomcat9/tomcat9.pid
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+Environment=CATALINA_HOME=/opt/tomcat9
+Environment=CATALINA_BASE=/opt/tomcat9
+Environment="CATALINA_OPTS=-Xms512m -Xmx512m"
+Environment="JAVA_OPTS=-Dfile.encoding=UTF-8 -Dnet.sf.ehcache.skipUpdateCheck=true -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC"
+ExecStart=/opt/tomcat9/bin/startup.sh
+ExecStop=/opt/tomcat9/bin/shutdown.sh
+[Install]
+WantedBy=multi-user.target
+
+============================================
+you need to make the file executable. run chmod +x startup.sh and then sudo ./startup.sh
+
+ln -s tomcat9
+chown -hR tomcat9: tomcat-latest apache-tomcat-9.0.0.M6
+
+
+
+====================================
+systemctl enable tomcat 
+Created symlink from /etc/systemd/system/multi-user.target.wants/tomcat.service to /usr/lib/systemd/system/tomcat.service.
+=====================================
+
+https://www.rosehosting.com/blog/install-tomcat-9-on-an-ubuntu-16-04-vps/
+https://www.google.co.in/search?q=english+to+tamil+dictionary&oq=e&aqs=chrome.5.69i60l4j69i57j69i59.3638j0j7&sourceid=chrome&ie=UTF-8
+https://websiteforstudents.com/setup-apache-tomcat9-on-ubuntu-16-04-17-10-18-04/
+=======================================================================
+Create Tomcat users by running the commands below… this users will own the Tomcat directory content..
+
+sudo useradd -r tomcat9 --shell /bin/false
+
+
+working tomcat9
+
+==========================================
+ln -s tomcat9/
+sudo chown -hR tomcat9: tomcat9
+sudo nano /etc/systemd/system/tomcat.service
+sudo nano /etc/systemd/system/tomcat9.service
+=================================Working tomcat.service=====================
+
+[Unit]
+Description=Tomcat9
+After=network.target
+
+[Service]
+Type=forking
+User=tomcat9
+Group=tomcat9
+
+Environment=CATALINA_PID=/opt/tomcat9/tomcat9.pid
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle
+Environment=CATALINA_HOME=/opt/tomcat9
+Environment=CATALINA_BASE=/opt/tomcat9
+Environment="CATALINA_OPTS=-Xms512m -Xmx512m"
+Environment="JAVA_OPTS=-Dfile.encoding=UTF-8 -Dnet.sf.ehcache.skipUpdateCheck=true -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+UseParN$
+
+ExecStart=/opt/tomcat9/bin/startup.sh
+ExecStop=/opt/tomcat9/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target
+
+===========================================
+sudo ufw allow 8080
+===========================================
+sudo systemctl daemon-reload
+sudo systemctl start tomcat9
+sudo systemctl enable tomcat9
+=============================================================================================
+======================MYSQL===================================================
+sudo apt-get install mysql-server
+sudo ufw allow mysql
+sudo systemctl start mysql
+sudo systemctl enable mysql
+
+================================================================================
+
+=================================MYSQL ERROR Resolved============================================
+https://stackoverflow.com/questions/25163614/error-1118-42000-row-size-too-large
+
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1118 (42000) at line 127: Row size too large (> 8126). Changing some columns to TEXT or BLOB may help. In current row format, BLOB prefix of 0 bytes is stored inline.
+
+1.sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+innodb_log_file_size = 512M
+innodb_strict_mode = 0
+
+=========================================================
+
+
+
+
