@@ -1,0 +1,51 @@
+
+https://pypi.org/project/django-pyodbc-azure/
+https://askubuntu.com/questions/850957/how-do-i-install-mssql-server-and-or-tools-for-linux-on-16-04
+https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-2017
+https://www.djangoproject.com/download/
+intall python latest version
+SetPath for Python
+pip install Django
+pip install djangorestframework
+python -m pip install --upgrade pip
+pip install django-pyodbc-azure
+pip install pyRserve
+
+https://pypi.org/project/django-pyodbc/
+https://knowledgebase.progress.com/articles/Article/How-to-install-Apache-HTTP-Server-on-Windows-Server
+https://www.apachelounge.com/download/
+http://www.wampserver.com/en/
+
+(myenv)$ python3 manage.py runserver --settings=settings.local_exposed --insecure
+=================settings.py=================================================
+DEBUG = False
+
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.117']
+ALLOWED_HOSTS = ['*']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+=============================================================================
+Rserve(args=" --RS-enable-remote")
+
+python3 manage.py runserver 0.0.0.0:8000
+
+ssh aaum@35.243.235.246
+ip : 35.243.235.246
+username :aaum
+password: cB?@YFx8F0V/y({
+===========
+cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=test;Trusted_Connection=yes;')
+cnxn = pyodbc.connect('DRIVER={SQL Server Native Client 11.0};SERVER=localhost;DATABASE=test;Trusted_Connection=yes;')
+
+http://localhost:8000/acqueonServices/updateRPCO/?format=json&sourceData=OBD_BODOperation_CurrentTimeStamp_CampaignID&startTime=2019-05-21%2018:00:00&endTime=2019-05-22%2007:00:00
+http://35.231.178.155:8000/acqueonServices/updateRPCO/?format=json&sourceData=OBD_BODOperation_CurrentTimeStamp_CampaignID&startTime=2019-05-21%2018:00:00&endTime=2019-05-22%2007:00:00
+
+http://35.231.178.155:8000/acqueonServices/updateRPCO/?format=json&sourceData=OBD_BODOperation_CurrentTimeStamp_CampaignID&startTime=2019-05-21%2018:00:00&endTime=2019-05-22%2007:00:00
+http://35.231.178.155:8000/acqueonServices/updateBODR/?format=json&sourceData=OBD_BODOperation_CurrentTimeStamp_CampaignID&startTime=2019-05-21%2018:00:00&endTime=2019-05-22%2007:00:00
+http://35.231.178.155:8000/acqueonServices/updateReschedule/?format=json&sourceData=CallActivity
+
+https://tecadmin.net/install-apache-mod-wsgi-on-ubuntu-18-04-bionic/
+https://www.geeksengine.com/article/install-apache2-on-windows.html
+https://code.djangoproject.com/wiki/django_apache_and_mod_wsgi
+https://code.google.com/archive/p/modwsgi/wikis/InstallationOnWindows.wiki
+https://github.com/GrahamDumpleton/mod_wsgi
+

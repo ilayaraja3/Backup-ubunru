@@ -1,0 +1,180 @@
+https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04
+pip install gunicorn
+1.sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx
+2.sudo -H pip3 install --upgrade pip
+3.sudo -H pip3 install virtualenv
+4.aaum@aaum-System-Product-Name:~$ mkdir ~/myproject
+5.aaum@aaum-System-Product-Name:~$ cd ~/myproject
+6.aaum@aaum-System-Product-Name:~/myproject$ virtualenv myprojectenv
+7.aaum@aaum-System-Product-Name:~/myproject$ source myprojectenv/bin/activate
+8.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ pip install djangorestframework
+9.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ pip install pyRserve
+10.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ pip install pyodbc
+11.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ pip install requests
+12.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ cd ..
+13.(myprojectenv) aaum@aaum-System-Product-Name:~$ django-admin.py startproject myproject ~/myproject
+14.(myprojectenv) aaum@aaum-System-Product-Name:~$ nano ~/myproject/myproject/settings.py
+15. ========Setting.py=====================
+ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.1.117']
+
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'app',
+]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+===================================================
+16.(myprojectenv) aaum@aaum-System-Product-Name:~$ ~/myproject/manage.py makemigrations
+17.(myprojectenv) aaum@aaum-System-Product-Name:~$ ~/myproject/manage.py migrate
+18.(myprojectenv) aaum@aaum-System-Product-Name:~$ ~/myproject/manage.py createsuperuser
+19.(myprojectenv) aaum@aaum-System-Product-Name:~$ ~/myproject/manage.py collectstatic
+--------output----------------------------------------------
+119 static files copied to '/home/aaum/myproject/static'.
+------------------------------------------------------------
+20.(myprojectenv) aaum@aaum-System-Product-Name:~$ sudo ufw allow 8000
+or (myprojectenv) aaum@aaum-System-Product-Name:~$ sudo ufw allow 8083
+21.(myprojectenv) aaum@aaum-System-Product-Name:~$ ~/myproject/manage.py runserver 0.0.0.0:8000
+22.(myprojectenv) aaum@aaum-System-Product-Name:~$ cd ~/myproject
+23.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ gunicorn --bind 0.0.0.0:8000 myproject.wsgi
+24.(myprojectenv) aaum@aaum-System-Product-Name:~/myproject$ cd ..
+25.(myprojectenv) aaum@aaum-System-Product-Name:~$ deactivate
+26.aaum@aaum-System-Product-Name:~$ sudo nano /etc/systemd/system/gunicorn.service
+----------copy following content--------------------------------------------------
+
+
+[Service]
+User=aaum
+Group=www-data
+WorkingDirectory=/home/aaum/myproject
+ExecStart=/home/aaum/myproject/myprojectenv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/aaum/myproject/myproject.sock myproject.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+-----------------------------------------------------------------------------------
+27.sudo systemctl start gunicorn
+28.sudo systemctl enable gunicorn
+29.aaum@aaum-System-Product-Name:~$ sudo systemctl status gunicorn
+30.ls /home/aaum/myproject
+db.sqlite3  manage.py  myproject  myprojectenv  static
+31.sudo journalctl -u gunicorn
+32.sudo nano /etc/systemd/system/gunicorn.service 
+(check directory of path)
+33.sudo systemctl daemon-reload
+34.sudo systemctl restart gunicorn
+35.ls /home/aaum/myproject (here myproject.sock file is loaded)
+db.sqlite3  manage.py  myproject  myprojectenv  myproject.sock  static
+36.sudo nano /etc/nginx/sites-available/myproject
+--------copy follwoing content-----------------------------------------------------
+
+server {
+    listen 8000;
+    server_name 127.0.0.1;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/aaum/myproject;
+    }
+ location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/aaum/myproject/myproject.sock;
+    }
+}
+
+-----------------------------------------------------------------------------------
+
+
+37. sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+38.sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+39.sudo systemctl restart nginx
+40. sudo ufw delete allow 8000
+41.sudo ufw allow 'Nginx Full'
+42.namei -nom /home/aaum/myproject/myproject.sock
+f: /home/aaum/myproject/myproject.sock
+ drwxr-xr-x root root     /
+ drwxr-xr-x root root     home
+ drwxr-xr-x aaum aaum     aaum
+ drwxrwxrwx aaum aaum     myproject
+ srwxrwxrwx aaum www-data myproject.sock
+43. sudo systemctl restart gunicorn
+44. sudo systemctl daemon-reload
+45.sudo systemctl restart gunicorn
+46.sudo nginx -t && sudo systemctl restart nginx
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+47. cd myproject
+48. aaum@aaum-System-Product-Name:~/myproject$ django-admin startapp app
+49. aaum@aaum-System-Product-Name:~/myproject$ ls
+app  db.sqlite3  manage.py  myproject  myprojectenv  myproject.sock  static
+50. urls.py
+-----------
+from django.contrib import admin
+from django.urls import path
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls import url, include
+from app import views
+from django.http import JsonResponse
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    url(r'^app/getEmp/$', views.get_county),
+]
+----------------------------------
+51.views.py inside app folder
+------copy following content-------------------------
+from django.shortcuts import render
+
+# Create your views here.
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+from .models import *
+from rest_framework import status
+from django.http import JsonResponse
+from rest_framework import viewsets
+import logging
+import threading
+import time
+import json
+
+@api_view(['GET'])
+def get_county(request):
+    #longitude = self.request.query_params.get('longitude')
+
+    name = request.GET['name']
+    time.sleep(3)
+    data={"result": name}
+
+    return Response(data, status=status.HTTP_200_OK)
+--------------------------------------------------------------------------
+52.go to browser and type following 
+http://yourIp:8000/app/getEmp/?name=12&format=json
+http://192.168.1.117:8000/app/getEmp/?name=12&format=json
+==========================================================END==========================================================================================
+
+===============================================WINDOWS=========================================================
+http://www.programmersought.com/article/79041468567/
+
+
+
+
+
+
+
+
+
+

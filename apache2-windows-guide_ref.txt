@@ -1,0 +1,14 @@
+http://free-tutorials.org/setting-up-django-with-nginx-on-windows-xp/
+
+https://www.codementor.io/aswinmurugesh/deploying-a-django-application-in-windows-with-apache-and-mod_wsgi-uhl2xq09e
+
+https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/modwsgi/
+
+https://www.metaltoad.com/blog/hosting-django-sites-apache
+
+
+https://www.geeksengine.com/article/install-apache2-on-windows.html
+
+https://www.geeksengine.com/article/install-apache2-on-windows.html
+
+https://stackoverflow.com/questions/6093727/problem-of-loading-mod-wsgi-module-into-apache-on-windows-64-bit/10553087#10553087

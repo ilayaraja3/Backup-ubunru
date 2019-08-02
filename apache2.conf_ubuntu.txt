@@ -1,0 +1,87 @@
+WSGIDaemonProcess www-data processes=5 threads=18 python-path=/home/aaum/pyRest
+WSGIProcessGroup www-data
+WSGIRestrictEmbedded On
+WSGILazyInitialization On
+WSGIScriptAlias /test /home/aaum/pyRest/pyRest/wsgi.py
+
+<Directory /home/aaum/pyRest/pyRest>
+Require all granted
+</Directory>
+
+sudo apt-get install libapache2-mod-wsgi-py3
+==========================================================
+
+https://stackoverflow.com/questions/1188542/django-runserver-permanent
+https://stackoverflow.com/questions/1000900/how-to-keep-a-python-script-output-window-open
+
+screen -ls
+There is a screen on:
+	22828.djangoSer	(Monday 24 June 2019 11:28:46  IST)	(Detached)
+1 Socket in /var/run/screen/S-aaum.
+aaum@aaum-System-Product-Name:~$ screen -X -S 22828 quit
+
+mod_wsgi
+
+https://howtoubuntu.org/how-to-install-lamp-on-ubuntu
+sudo apt install apache2
+sudo service apache2 restart
+pip install gcloud or pip install --upgrade gcloud or sudo pip install --upgrade setuptools
+
+sudo pip install mod_wsgi
+export "MOD_WSGI_APACHE_ROOTDIR=/usr/share/apache2"
+eche $MOD_WSGI_APACHE_ROOTDIR
+
+sudo nano /var/www/html/wsgi_test_script.py
+
+
+https://tecadmin.net/install-apache-mod-wsgi-on-ubuntu-16-04-xenial/
+https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-apache-and-mod_wsgi-on-ubuntu-16-04
+
+ Alias /static /home/aaum/pyRest/static
+    <Directory /home/aaum/pyRest/static>
+        Require all granted
+    </Directory>
+
+    <Directory /home/aaum/pyRest/pyRest>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+WSGIDaemonProcess myproject python-home=/home/aaum/pyRest/ python-path=/home/aaum/pyRest
+    WSGIProcessGroup pyRest
+    WSGIScriptAlias / //home/aaum/pyRest/pyRest/wsgi.py
+
+http://myembeddedlinux.blogspot.com/2017/11/host-django-app-in-apache-windows.html
+https://tecadmin.net/install-apache-mod-wsgi-on-ubuntu-18-04-bionic/
+https://www.geeksengine.com/article/install-apache2-on-windows.html
+
+https://andersguide.com/2013/04/03/how-to-deploy-a-django-page-on-the-apache-http-server-on-windows/
+https://medium.com/@thetrevorharmon/installing-django-onto-windows-server-2012-b64ce6563cb
+http://www.devside.net/wamp-server/opening-up-port-80-for-apache-to-use-on-windows
+=================================================================
+https://www.codementor.io/aswinmurugesh/deploying-a-django-application-in-windows-with-apache-and-mod_wsgi-uhl2xq09e
+https://andersguide.com/2013/04/03/how-to-deploy-a-django-page-on-the-apache-http-server-on-windows/
+https://stackoverflow.com/questions/54323801/django-rest-api-deploy-on-apache
+sudo apt-get update
+sudo apt-get install apache2
+sudo a2enmod wsgi
+sudo apt-get install python3-pip apache2 libapache2-mod-wsgi-py3
+
+https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_URL = '/static/'
+
+
+https://www.geeksengine.com/article/install-apache2-on-windows.html
+
+
+
+========================================================================================================================================
+
+
+
+
+
+

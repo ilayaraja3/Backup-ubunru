@@ -1,0 +1,117 @@
+python3 manage.py runserver 0.0.0.0:8000
+
+ssh aaum@35.243.235.246
+ip : 35.243.235.246
+username :aaum
+password: cB?@YFx8F0V/y({
+
+https://www.python.org/downloads/windows/
+
+2. pip install virtualenvwrapper-win
+3. mkvirtualenv myproject
+4. workon myproject
+5. pip install django
+6. pip install djangorestframework
+https://www.djangoproject.com/download/
+add environment variable python location
+
+pip install Django==2.2.2
+python -m pip install --upgrade pip
+
+pip install virtualenv
+django-admin.py startproject pyRest
+pip install djangorestframework
+python manage.py createsuperuser --username admin
+django-admin.py startapp pyRest
+======================setting.py========================================
+DEBUG = False
+
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.117']
+ALLOWED_HOSTS = ['*']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+========================================================================
+Rserve(args=" --RS-enable-remote")
+
+python manage.py runserver 0.0.0.0:8000
+
+
+http://10.142.0.40:8000/app/getEmp/?format=json&name=12
+
+10.142.0.40
+pip install django-pyodbc-azure
+pip install pyodbc
+pip install django-mssql
+
+pip install pyRserve
+
+===============MSSQL DBConfiguration=========
+https://medium.com/@royce236/django-and-ms-sql-server-2012-connection-2018-120c54dfc037
+sa Geni@123
+
+===========================
+
+
+========================UBUNTU================
+
+
+sudo pip install virtualenv
+virtualenv venv
+source venv/bin/activate
+
+pip install Django==1.9
+pip install djangorestframework==3.6.3
+django-admin.py startproject samplenote .
+cd samplenote
+django-admin.py startapp note
+python manage.py makemigrations
+python manage.py migrate
+
+==============================================
+
+https://stackoverflow.com/questions/3845582/django-request-get-and-keyerror
+my_param = request.GET.get('param')
+if my_param is None:
+    return HttpResponseBadRequest()
+(or)
+if 'param' in request.GET:
+    my_param = request.GET['param']
+else:
+    my_param = default_value
+=================================================
+https://pythonprogramming.net/deploying-to-server-django-tutorial/
+https://pythonprogramming.net/deploying-to-server-django-tutorial/
+https://stackoverflow.com/questions/54323801/django-rest-api-deploy-on-apache
+https://medium.com/@charlesthk/deploy-nginx-django-uwsgi-on-aws-ec2-amazon-linux-517a683163c6
+https://tutos.readthedocs.io/en/latest/source/ndg.html
+
+https://www.youtube.com/watch?list=PLGz_X9w9raXe_Vc708VKvr5KJ4gnf1WxS&v=OeDEMLBFryU
+
+=======================INSTALL NGINX=========================
+http://free-tutorials.org/setting-up-django-with-nginx-on-windows-xp/
+================================================
+python -m pip install --upgrade pip setuptools wheel
+pip install setuptools==3.6
+pip install django-fastcgi-server
+pip install django-fastcgi
+pip install flup6
+pip3 install flup-py3
+pip install mod_wsgi
+
+pip3 install --upgrade flipflop
+pip install waitress
+
+pip install flup-py3
+https://modwsgi.readthedocs.io/en/develop/
+httpd -n Apache24 -k install
+Back to top	
+
+===========================
+https://tecadmin.net/install-apache-mod-wsgi-on-ubuntu-18-04-bionic/
+https://www.geeksengine.com/article/install-apache2-on-windows.html
+https://code.djangoproject.com/wiki/django_apache_and_mod_wsgi
+https://code.google.com/archive/p/modwsgi/wikis/InstallationOnWindows.wiki
+https://github.com/GrahamDumpleton/mod_wsgi
+https://stackoverflow.com/questions/6093727/problem-of-loading-mod-wsgi-module-into-apache-on-windows-64-bit
+https://www.programering.com/a/MTM2gzMwATY.html
+
+
